@@ -1,0 +1,4 @@
+- name: Setup tool with ansible code
+  hosts: all
+  roles:
+    - "{{ tool_name }}"
