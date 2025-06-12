@@ -1,0 +1,30 @@
+- name: set prompt
+  ansible.builtin.shell: set-prompt prometheus
+
+- name: Create prometheus user
+  ansible.builtin.user:
+    name: prometheus
+    state: present
+
+- name: Download prometheus
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus/prometheus/releases/download/v2.53.4/prometheus-2.53.4.linux-amd64.tar.gz
+    dest: /opt
+    remote_src: true
+    owner: prometheus
+    group: prometheus
+
+- name: Copy prometheus service
+  ansible.builtin.template:
+    src: prometheus.service
+    dest: /etc/systemd/system/prometheus.service
+
+- name: Prometheus service
+  ansible.builtin.service:
+    name: prometheus
+    state: restarted
+    enabled: yes
+    daemon-reload: yes
+
+
+
