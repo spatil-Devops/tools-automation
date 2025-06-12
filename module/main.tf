@@ -43,7 +43,7 @@ resource "aws_instance" "node" {
 }
 
 resource "aws_route53_record" "record" {
-  zone_id = data.aws_route53_zone.zone.zone_id
+  zone_id = data.aws_route53_zone.main.zone_id
   name    = "${var.name}.sdevopsp25.site"
   type    = "A"
   ttl     = 30
