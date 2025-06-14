@@ -10,10 +10,9 @@
 
 - name: Start Grafana service
   ansible.builtin.service:
-    name: grafana
-    state: restarted
+    name: grafana-server
+    state: started
     enabled: yes
-    daemon-reload: yes
 
 - name: Create or update a Grafana user
   community.grafana.grafana_user:
