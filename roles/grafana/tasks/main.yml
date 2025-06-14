@@ -14,16 +14,6 @@
     state: started
     enabled: yes
 
-- name: Create or update a Grafana user
-  community.grafana.grafana_user:
-    url: "http://localhost:3000"
-    login: admin
-    password: admin123
-    is_admin: true
-    state: present
-    name: shubham
-    email: shubhpatil990@gmail.com
-
 - name: create prometheus datasource
   community.grafana.grafana_datasource:
     name: prometheus
