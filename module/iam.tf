@@ -17,11 +17,6 @@ resource "aws_iam_role" "main" {
     ]
   })
 
-  lifecycle {
-    ignore_changes = [
-      "id"
-    ]
-  }
 
   tags = {
     tag-key = "${var.name}-role"
@@ -50,10 +45,5 @@ resource "aws_iam_role_policy" "inline-policy" {
     ]
   })
 
-  lifecycle {
-    ignore_changes = [
-      "id"
-    ]
-  }
 }
 
