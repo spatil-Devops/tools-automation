@@ -37,10 +37,7 @@ resource "aws_iam_role_policy" "inline-policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action = [
-          "ec2:DescribeInstances",
-          "ec2:DescribeAvailabilityZones"
-        ]
+        Action = concat(var.dummy_policy,var.policy_actions)
         Effect   = "Allow"
         Resource = "*"
       },

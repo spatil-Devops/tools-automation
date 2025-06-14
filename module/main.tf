@@ -28,6 +28,7 @@ resource "aws_instance" "node" {
   ami           = data.aws_ami.ami.image_id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.allow_all.id]
+  iam_instance_profile = aws_iam_instance_profile.main.name
 
   instance_market_options {
     market_type = "spot"
