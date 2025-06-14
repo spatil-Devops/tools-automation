@@ -27,9 +27,8 @@ resource "aws_iam_instance_profile" "main" {
   role = aws_iam_role.main.name
 }
 
-resource "aws_iam_role_policy" "inline-policy" {
+resource "aws_iam_policy" "inline-policy" {
   name = "inline-policy"
-  role = aws_iam_role.main.id
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -45,12 +44,7 @@ resource "aws_iam_role_policy" "inline-policy" {
   })
 }
 
-import {
-  id = aws_iam_role.main
-  to = "main"
-}
-
-import {
-  to = aws_iam_role_policy.inline-policy
-  id = "main:inline-policy"
+resource "aws_iam_role_policy_attachment" "attach-inline-policy" {
+  role       = aws_iam_role.main.name
+  policy_arn = aws_iam_policy.inline-policy.arn
 }
