@@ -1,5 +1,6 @@
 resource "aws_iam_role" "main" {
   name = "${var.name}-role"
+  force_detach_policies = true
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
