@@ -1,6 +1,5 @@
 resource "aws_iam_role" "main" {
   name = "${var.name}-role"
-  force_detach_policies = true
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -18,6 +17,12 @@ resource "aws_iam_role" "main" {
     ]
   })
 
+  lifecycle {
+    ignore_changes = [
+      "id"
+    ]
+  }
+
   tags = {
     tag-key = "${var.name}-role"
   }
@@ -28,8 +33,9 @@ resource "aws_iam_instance_profile" "main" {
   role = aws_iam_role.main.name
 }
 
-resource "aws_iam_policy" "inline-policy" {
+resource "aws_iam_role_policy" "inline-policy" {
   name = "inline-policy"
+  role = aws_iam_role.main.id
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -43,9 +49,11 @@ resource "aws_iam_policy" "inline-policy" {
       },
     ]
   })
+
+  lifecycle {
+    ignore_changes = [
+      "id"
+    ]
+  }
 }
 
-resource "aws_iam_role_policy_attachment" "attach-inline-policy" {
-  role       = aws_iam_role.main.name
-  policy_arn = aws_iam_policy.inline-policy.arn
-}
