@@ -1,0 +1,36 @@
+- name: Copy repo file
+  ansible.builtin.template:
+    src: grfana.repo
+    dest: /etc/yum.repos.d/grafana.repo
+
+- name: Install grafana
+  ansible.builtin.dnf:
+    name: grafana
+    state: installed
+
+- name: Start Grafana service
+  ansible.builtin.service:
+    name: grafana
+    state: restarted
+    enabled: yes
+    daemon-reload: yes
+
+- name: Create or update a Grafana user
+  community.grafana.grafana_user:
+    url: "http://localhost:3000"
+    login: admin
+    password: admin123
+    is_admin: true
+    state: present
+
+- name: create prometheus datasource
+  community.grafana.grafana_datasource:
+    name: prometheus
+    ds_type: prometheus
+    ds_url: http://prometheus-internal.sdevopsp25.site:9090
+    access: direct
+    url: http://localhost:3000
+    url_username: admin
+    url_password: admin123
+
+

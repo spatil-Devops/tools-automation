@@ -15,5 +15,11 @@ variable "tools" {
           "ec2:DescribeAvailabilityZones"
         ]
     }
+    grafana = {
+       name          = "prometheus"
+       instance_type = "t3.small"
+       port_no = 3000
+       policy_actions = []
+    }
   }
 }
