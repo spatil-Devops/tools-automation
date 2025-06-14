@@ -2,3 +2,4 @@
 name=grafana
 baseurl=https://rpm.grafana.com
 enabled=1
+gpgcheck=0
