@@ -44,3 +44,13 @@ resource "aws_iam_role_policy" "inline-policy" {
     ]
   })
 }
+
+import {
+  id = aws_iam_role.main
+  to = "main"
+}
+
+import {
+  to = aws_iam_role_policy.inline-policy
+  id = "main:inline-policy"
+}
