@@ -1,6 +1,10 @@
 - name: set prompt
   ansible.builtin.shell: set-prompt prometheus
 
+- name: Install hvac
+  ansible.builtin.pip:
+    name: hvac
+
 - name: Create prometheus user
   ansible.builtin.user:
     name: prometheus
