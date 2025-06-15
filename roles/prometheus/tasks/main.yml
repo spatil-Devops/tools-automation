@@ -21,6 +21,13 @@
     owner: prometheus
     group: prometheus
 
+- name: Update Alerts
+  ansible.builtin.template:
+    src: alert_rules.yml
+    dest: /opt/prometheus-2.53.4.linux-amd64/alert_rules.yml
+    owner: prometheus
+    group: prometheus
+
 - name: Copy prometheus service
   ansible.builtin.template:
     src: prometheus.service
@@ -33,5 +40,31 @@
     enabled: yes
     daemon-reload: yes
 
+- name: Download AlertManager
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus/alertmanager/releases/download/v0.27.0/alertmanager-0.27.0.linux-amd64.tar.gz
+    dest: /opt
+    remote_src: true
+    owner: prometheus
+    group: prometheus
+
+- name: Update AlertManager configuration
+  ansible.builtin.template:
+    src: alertmanager.yml
+    dest: /opt/alertmanager-0.27.0.linux-amd64/alertmanager.yml
+    owner: prometheus
+    group: prometheus
+
+- name: Copy AlertManager systemd file
+  ansible.builtin.template:
+    src: alertmanager.service
+    dest: /etc/systemd/system/alertmanager.service
+
+- name: Start Alert Manager service
+  ansible.builtin.service:
+    name: alertmanager
+    state: restarted
+    enabled: yes
+    daemon-reload: yes
 
 

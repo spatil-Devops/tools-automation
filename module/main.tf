@@ -9,13 +9,6 @@ resource "aws_security_group" "allow_all" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = var.port_no
-    to_port     = var.port_no
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -24,6 +17,17 @@ resource "aws_security_group" "allow_all" {
   }
 
 }
+
+resource "aws_security_group_rule" "app-ports" {
+  count             = length(var.port_no)
+  type              = "ingress"
+  from_port         = element(var.port_no, count.index )
+  to_port           = element(var.port_no, count.index )
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.allow_all.id
+}
+
 
 resource "aws_instance" "node" {
   ami           = data.aws_ami.ami.image_id
