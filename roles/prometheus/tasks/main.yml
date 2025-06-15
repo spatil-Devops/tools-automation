@@ -34,11 +34,11 @@
     dest: /etc/systemd/system/prometheus.service
 
 - name: Start Prometheus service
-  ansible.builtin.service:
-    name: prometheus
-    state: restarted
-    enabled: yes
-    daemon-reload: yes
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: start-service
+  vars:
+    service_name: prometheus
 
 - name: Download AlertManager
   ansible.builtin.unarchive:
@@ -48,12 +48,12 @@
     owner: prometheus
     group: prometheus
 
-#- name: Update AlertManager configuration
-#  ansible.builtin.template:
-#    src: alertmanager.yml
-#    dest: /opt/alertmanager-0.27.0.linux-amd64/alertmanager.yml
-#    owner: prometheus
-#    group: prometheus
+- name: Update AlertManager configuration
+  ansible.builtin.template:
+    src: alertmanager.yml
+    dest: /opt/alertmanager-0.27.0.linux-amd64/alertmanager.yml
+    owner: prometheus
+    group: prometheus
 
 - name: Copy AlertManager systemd file
   ansible.builtin.template:
@@ -61,10 +61,9 @@
     dest: /etc/systemd/system/alertmanager.service
 
 - name: Start Alert Manager service
-  ansible.builtin.service:
-    name: alertmanager
-    state: restarted
-    enabled: yes
-    daemon-reload: yes
-
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: start-service
+  vars:
+    service_name: alertmanager
 

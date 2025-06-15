@@ -1,1 +1,1 @@
-ansible-playbook -i ${tool_name}-internal.sdevopsp25.site, -e ansible_user=ec2-user -e ansible_password=${SSH_PASSWORD} -e tool_name=${tool_name} setup-tools.yml
+ansible-playbook -i ${tool_name}-internal.sdevopsp25.site, -e ansible_user=ec2-user -e ansible_password=${SSH_PASSWORD} -e tool_name=${tool_name} -e vault_token=${vault_token} setup-tools.yml
