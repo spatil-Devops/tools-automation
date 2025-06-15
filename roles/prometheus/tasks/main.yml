@@ -48,12 +48,12 @@
     owner: prometheus
     group: prometheus
 
-- name: Update AlertManager configuration
-  ansible.builtin.template:
-    src: alertmanager.yml
-    dest: /opt/alertmanager-0.27.0.linux-amd64/alertmanager.yml
-    owner: prometheus
-    group: prometheus
+#- name: Update AlertManager configuration
+#  ansible.builtin.template:
+#    src: alertmanager.yml
+#    dest: /opt/alertmanager-0.27.0.linux-amd64/alertmanager.yml
+#    owner: prometheus
+#    group: prometheus
 
 - name: Copy AlertManager systemd file
   ansible.builtin.template:
