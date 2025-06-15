@@ -24,4 +24,17 @@
     url_username: admin
     url_password: admin123
 
+- name: Copy json to tmp
+  ansible.builtin.copy:
+    src: dashboard.json
+    dest: /tmp/dashboard.json
 
+- name: Import Grafana dashboard foo
+  community.grafana.grafana_dashboard:
+    grafana_url: http://localhost:3000
+    url_username: admin
+    url_password: admin123
+    state: present
+    commit_message: Updated by ansible
+    overwrite: true
+    path: /tmp/dashboard.json
