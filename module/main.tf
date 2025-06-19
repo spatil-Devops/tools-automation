@@ -15,7 +15,8 @@ resource "aws_security_group" "allow_all" {
       from_port   = ingress.value
       to_port     = ingress.value
       protocol    = "tcp"
-      cidr_blocks = ingress.key
+      description = ingress.key
+      cidr_blocks = ["0.0.0.0/0"]
     }
   }
   egress {
